@@ -1,4 +1,4 @@
-package cyd.org.project1.views.MovieList;
+package cyd.org.project1.views;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,9 +18,24 @@ import cyd.org.project1.R;
 import cyd.org.project1.model.Movie;
 import cyd.org.project1.presenter.MoviePresenter;
 import cyd.org.project1.presenter.MoviePresenterImpl;
-import cyd.org.project1.views.Settings.SettingsActivity;
+import cyd.org.project1.views.movieList.MoveListAdapter;
+import cyd.org.project1.views.settings.SettingsActivity;
 
-public class MovieListActivity extends AppCompatActivity implements MoviePresenter.Listener, SharedPreferences.OnSharedPreferenceChangeListener {
+/**
+ * An activity representing a list of Movies. This activity
+ * has different presentations for handset and tablet-size devices. On
+ * handsets, the activity presents a list of items, which when touched,
+ * lead to a {@link MovieDetailActivity} representing
+ * item details. On tablets, the activity presents the list of items and
+ * item details side-by-side using two vertical panes.
+ */
+public class MovieListActivity extends AppCompatActivity implements MoviePresenter.Listener, SharedPreferences.OnSharedPreferenceChangeListener  {
+
+  /**
+   * Whether or not the activity is in two-pane mode, i.e. running on a tablet
+   * device.
+   */
+  private boolean mTwoPane;
 
   private GridLayoutManager gridLayoutManager;
   private RecyclerView recyclerView;
@@ -31,9 +46,21 @@ public class MovieListActivity extends AppCompatActivity implements MoviePresent
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+    setContentView(R.layout.activity_movie_list);
+
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
+    toolbar.setTitle(getTitle());
+
+
+
+    if (findViewById(R.id.movie_detail_container) != null) {
+      // The detail container view will be present only in the
+      // large-screen layouts (res/values-w900dp).
+      // If this view is present, then the
+      // activity should be in two-pane mode.
+      mTwoPane = true;
+    }
     moviePresenter = new MoviePresenterImpl(this);
     moviePresenter.getMovies(MoviePresenter.Criteria.POPULAR);
     PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
@@ -44,11 +71,12 @@ public class MovieListActivity extends AppCompatActivity implements MoviePresent
 
   private void initializeList() {
     gridLayoutManager = new GridLayoutManager(this, 2);
-    moveListAdapter = new MoveListAdapter();
+    moveListAdapter = new MoveListAdapter(mTwoPane, this);
     recyclerView = (RecyclerView) findViewById(R.id.listImages);
     recyclerView.setLayoutManager(gridLayoutManager);
     recyclerView.setAdapter(moveListAdapter);
   }
+
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {

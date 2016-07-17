@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
 
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="cyd.org.project1.views.MovieList.MovieListActivity"
+    tools:context="cyd.org.project1.views.movieList.MovieListActivity"
     tools:showIn="@layout/activity_main">
 
 

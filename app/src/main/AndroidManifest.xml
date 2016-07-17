@@ -11,22 +11,30 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".views.MovieList.MovieListActivity"
-            android:label="@string/app_name"
+            android:name=".views.movieDetailed.MoviesDetailedInformationActivity"
+            android:label="@string/title_activity_movies_detailed_information"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".views.settings.SettingsActivity"
+            android:label="@string/title_activity_settings">
+        </activity>
+        <activity
+            android:name=".views.MovieListActivity"
+            android:label="@string/title_movie_list"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
-            android:name=".views.MovieDetailed.MoviesDetailedInformationActivity"
-            android:label="@string/title_activity_movies_detailed_information"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity
-            android:name=".views.Settings.SettingsActivity"
-            android:label="@string/title_activity_settings">
+            android:name=".views.MovieDetailActivity"
+            android:label="@string/title_movie_detail"
+            android:parentActivityName=".views.MovieListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="cyd.org.project1.views.MovieListActivity"/>
         </activity>
     </application>
 
