@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'realm-android'
+
 
 android {
     compileSdkVersion 24
@@ -7,9 +9,10 @@ android {
     defaultConfig {
         applicationId "cyd.org.project1"
         minSdkVersion 19
-        targetSdkVersion 23
+        targetSdkVersion 24
         versionCode 1
         versionName "1.0"
+
         buildConfigField "String", "API_KEY", "\"bab72a6de3b115c3435d26bfb5a89c0c\""
         buildConfigField "String", "URL_ENDPOINT", "\"http://api.themoviedb.org/\""
         buildConfigField "String", "URL_IMAGE_ENDPOINT", "\"http://image.tmdb.org/t/p/w185/\""

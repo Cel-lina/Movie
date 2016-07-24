@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="cyd.org.project1">
+          package="cyd.org.movies">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -9,32 +9,24 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:name="cyd.org.movies.common.MovieApplication"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".views.movieDetailed.MoviesDetailedInformationActivity"
+            android:name="cyd.org.movies.views.movieDetailed.MoviesDetailedInformationActivity"
             android:label="@string/title_activity_movies_detailed_information"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".views.settings.SettingsActivity"
+            android:name="cyd.org.movies.views.settings.SettingsActivity"
             android:label="@string/title_activity_settings">
         </activity>
         <activity
-            android:name=".views.MovieListActivity"
+            android:name="cyd.org.movies.views.movieList.MovieListActivity"
             android:label="@string/title_movie_list"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".views.MovieDetailActivity"
-            android:label="@string/title_movie_detail"
-            android:parentActivityName=".views.MovieListActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="cyd.org.project1.views.MovieListActivity"/>
         </activity>
     </application>
 
