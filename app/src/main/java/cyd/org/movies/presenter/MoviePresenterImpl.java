@@ -47,8 +47,15 @@ public class MoviePresenterImpl implements MoviePresenter {
     call.enqueue(new Callback<ResponseMovies>() {
       @Override
       public void onResponse(Call<ResponseMovies> call, Response<ResponseMovies> response) {
-        List<Movie> list = Arrays.asList(response.body().getResults());
-        listener.onSuccess(list);
+
+          try {
+            List<Movie> list = Arrays.asList(response.body().getResults());
+            listener.onSuccess(list);
+          }
+          catch ( Exception e){
+            listener.onError();
+          }
+
       }
 
       @Override

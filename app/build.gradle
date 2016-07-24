@@ -7,7 +7,7 @@ android {
     buildToolsVersion "24.0.0"
 
     defaultConfig {
-        applicationId "cyd.org.project1"
+        applicationId "cyd.org.movies"
         minSdkVersion 19
         targetSdkVersion 24
         versionCode 1
