@@ -14,18 +14,17 @@ import android.view.MenuItem;
 
 import java.util.List;
 
+import cyd.org.movies.R;
 import cyd.org.movies.model.Movie;
 import cyd.org.movies.presenter.MoviePresenter;
-import cyd.org.movies.R;
 import cyd.org.movies.presenter.MoviePresenterImpl;
-import cyd.org.movies.views.movieDetailed.MovieDetailFragment;
 import cyd.org.movies.views.settings.SettingsActivity;
 
 /**
  * An activity representing a list of Movies. This activity
  * has different presentations for handset and tablet-size devices. On
  * handsets, the activity presents a list of items, which when touched,
- * lead to a {@link MovieDetailActivity} representing
+ * lead to a representing
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
@@ -61,17 +60,29 @@ public class MovieListActivity extends AppCompatActivity implements MoviePresent
       // activity should be in two-pane mode.
       mTwoPane = true;
     }
-    moviePresenter = new MoviePresenterImpl(this);
-    moviePresenter.getMovies(MoviePresenter.Criteria.POPULAR);
+
     PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
     initializeList();
+
+
+    moviePresenter = new MoviePresenterImpl(this);
+    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+    String criteria = prefs.getString("sort_criteria", "0");
+
+    moviePresenter.getMovies( loadCriteria(criteria) );
+
   }
 
 
 
 
   private void initializeList() {
-    gridLayoutManager = new GridLayoutManager(this, 2);
+    if ( mTwoPane == true){
+      gridLayoutManager = new GridLayoutManager(this, 3);
+    }
+    else {
+      gridLayoutManager = new GridLayoutManager(this, 2);
+    }
     moveListAdapter = new MoveListAdapter(mTwoPane, this);
     recyclerView = (RecyclerView) findViewById(R.id.listImages);
     recyclerView.setLayoutManager(gridLayoutManager);
@@ -113,6 +124,7 @@ public class MovieListActivity extends AppCompatActivity implements MoviePresent
 
     moveListAdapter.setMovieList(movies);
     moveListAdapter.notifyDataSetChanged();
+
     Log.d("debug", "loading movies again");
   }
 
@@ -126,6 +138,12 @@ public class MovieListActivity extends AppCompatActivity implements MoviePresent
   public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
     Log.d("debug", "settings changed" + key);
     String criteria = sharedPreferences.getString(key, "0");
+
+    moviePresenter.getMovies(loadCriteria(criteria));
+
+  }
+
+  private MoviePresenter.Criteria loadCriteria(String criteria) {
     MoviePresenter.Criteria finalCriteria = MoviePresenter.Criteria.POPULAR;
     switch (criteria) {
       case "0":
@@ -139,10 +157,6 @@ public class MovieListActivity extends AppCompatActivity implements MoviePresent
         break;
     }
     Log.d("debug", "criteria is " + finalCriteria.name());
-
-    moviePresenter.getMovies(finalCriteria);
-
-
-
+    return finalCriteria;
   }
 }
