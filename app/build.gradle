@@ -13,7 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        buildConfigField "String", "API_KEY", "\"bab72a6de3b115c3435d26bfb5a89c0c\""
+        buildConfigField "String", "API_KEY", "\"insert_your_apikey_here_for_themovie_db\""
         buildConfigField "String", "URL_ENDPOINT", "\"http://api.themoviedb.org/\""
         buildConfigField "String", "URL_IMAGE_ENDPOINT", "\"http://image.tmdb.org/t/p/w185/\""
 
